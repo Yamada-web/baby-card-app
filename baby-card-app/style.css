@@ -1,0 +1,36 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  background: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#card {
+  width: 90vw;
+  height: 70vh;
+  background: white;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#cardImage {
+  max-width: 80%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+#name {
+  margin-top: 12px;
+  font-size: 28px;
+}
