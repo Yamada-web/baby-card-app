@@ -26,14 +26,29 @@ document.addEventListener("touchmove", (e) => {
       `translate(0, ${dragY * 0.4}px) scale(${frontScale})`;
   }
 
-  // 裏カード（だんだん浮き上がる + 影強調・上下ずらし）
+  // 裏カード（スワイプ反対方向から出てくる）
   const scale = 0.95 + progress * 0.05;
-  const opacity = 0.5 + progress * 0.5;
-  const liftY = 10 - progress * 10; // 少しずつ上にくる
-  const shadow = 10 + progress * 20;
+  const opacity = 0.4 + progress * 0.6;
+  const shadow = 8 + progress * 20;
+
+  // 方向判定
+  let offsetX = 0;
+  let offsetY = 0;
+
+  if (Math.abs(dragX) > Math.abs(dragY)) {
+    // 横スワイプ
+    offsetX = dragX > 0 ? -40 : 40; // 右スワイプ→左から / 左スワイプ→右から
+  } else {
+    // 縦スワイプ
+    offsetY = dragY > 0 ? -40 : 40; // 下スワイプ→上から / 上スワイプ→下から
+  }
+
+  // スワイプ量に応じて中央へ寄ってくる
+  const moveX = offsetX * (1 - progress);
+  const moveY = offsetY * (1 - progress);
 
   back.style.transform =
-    `translate(-50%, calc(-50% + ${liftY}px)) scale(${scale})`;
+    `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(${scale})`;
   back.style.opacity = opacity;
   back.style.boxShadow = `0 ${shadow}px ${shadow * 2}px rgba(0,0,0,0.25)`;
 });
