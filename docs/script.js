@@ -1,4 +1,3 @@
-
 const MIN_DISTANCE = 30;
 
 let isDragging = false;
@@ -72,14 +71,24 @@ document.addEventListener("touchmove", (e) => {
   dragY = touch.clientY - startY;
 
   const cardEl = document.getElementById("card");
-  cardEl.style.transform = `translate(${dragX * 0.4}px, ${dragY * 0.4}px)`;
+
+  // 横スワイプ優先（ポケカ風）
+  if (Math.abs(dragX) > Math.abs(dragY)) {
+    const rotate = dragX * 0.05; // 傾き
+    cardEl.style.transform =
+      `translateX(${dragX * 0.6}px) rotate(${rotate}deg)`;
+  } else {
+    // 縦は少しだけ追従
+    cardEl.style.transform =
+      `translateY(${dragY * 0.3}px)`;
+  }
 });
 
 document.addEventListener("touchend", (e) => {
   isDragging = false;
 
   const cardEl = document.getElementById("card");
-  cardEl.style.transition = "transform 0.25s ease, opacity 0.25s ease";
+  cardEl.style.transition = "transform 0.35s cubic-bezier(.22,1.2,.36,1)";
 
   const endX = e.changedTouches[0].clientX;
   const endY = e.changedTouches[0].clientY;
@@ -89,7 +98,7 @@ document.addEventListener("touchend", (e) => {
   const time = Date.now() - startTime;
 
   if (Math.abs(dx) < MIN_DISTANCE && Math.abs(dy) < MIN_DISTANCE) {
-    cardEl.style.transform = "translate(0, 0)";
+    cardEl.style.transform = "translate(0, 0) rotate(0deg)";
     return;
   }
 
@@ -119,7 +128,7 @@ document.addEventListener("touchend", (e) => {
     }
   }
 
-  cardEl.style.transform = "translate(0, 0)";
+  cardEl.style.transform = "translate(0, 0) rotate(0deg)";
 });
 
 // ▶ カード：次（ループ）
