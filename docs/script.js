@@ -20,10 +20,10 @@ document.addEventListener("touchmove", (e) => {
   if (Math.abs(dragX) > Math.abs(dragY)) {
     const rotate = dragX * 0.05;
     front.style.transform =
-      `translate(${dragX * 0.6}px, 0) rotate(${rotate}deg) scale(${frontScale})`;
+      `translate(calc(-50% + ${dragX * 0.6}px), -50%) rotate(${rotate}deg) scale(${frontScale})`;
   } else {
     front.style.transform =
-      `translate(0, ${dragY * 0.4}px) scale(${frontScale})`;
+      `translate(-50%, calc(-50% + ${dragY * 0.4}px)) scale(${frontScale})`;
   }
 
   // 裏カード（スワイプ反対方向から出てくる）
@@ -67,7 +67,7 @@ document.addEventListener("touchend", (e) => {
   const time = Date.now() - startTime;
 
   if (Math.abs(dx) < MIN_DISTANCE && Math.abs(dy) < MIN_DISTANCE) {
-    cardEl.style.transform = "translate(0, 0) rotate(0deg)";
+    cardEl.style.transform = "translate(-50%, -50%) rotate(0deg)";
     const back = document.querySelector(".back-card");
     back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
     back.style.opacity = "0.5";
@@ -116,7 +116,7 @@ document.addEventListener("touchend", (e) => {
     }
   }
 
-  cardEl.style.transform = "translate(0, 0) rotate(0deg)";
+  cardEl.style.transform = "translate(-50%, -50%) rotate(0deg)";
   const back = document.querySelector(".back-card");
   back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
   back.style.opacity = "0.5";
