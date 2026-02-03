@@ -22,24 +22,42 @@ let currentCategoryIndex = 0;
 let currentIndex = 0;
 
 function animateCard(x, y, callback) {
-  const cardEl = document.getElementById("card");
-  cardEl.style.transform = `translate(${x}px, ${y}px)`;
-  cardEl.style.opacity = "0";
+  const front = document.getElementById("card");
+  const back = document.querySelector(".back-card");
+
+  front.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.05}deg)`;
+  front.style.opacity = "0";
 
   setTimeout(() => {
     callback();
-    cardEl.style.transform = "translate(0, 0)";
-    cardEl.style.opacity = "1";
-  }, 250);
+
+    front.style.transition = "none";
+    front.style.transform = "translate(-50%, -50%) rotate(0deg)";
+    front.style.opacity = "1";
+
+    back.style.transition = "none";
+    back.style.transform = "translate(-50%, -50%) scale(0.95)";
+
+    setTimeout(() => {
+      front.style.transition = "";
+      back.style.transition = "";
+    }, 20);
+  }, 300);
 }
 
 // カード表示
 function updateCard() {
   const category = categoryKeys[currentCategoryIndex];
-  const card = categories[category][currentIndex];
+  const list = categories[category];
 
-  document.getElementById("cardImage").src = card.image;
-  document.getElementById("name").textContent = card.name;
+  const current = list[currentIndex];
+  const next = list[(currentIndex + 1) % list.length];
+
+  document.getElementById("cardImage").src = current.image;
+  document.getElementById("name").textContent = current.name;
+
+  document.getElementById("backImage").src = next.image;
+  document.getElementById("backName").textContent = next.name;
 }
 
 updateCard();
