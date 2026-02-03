@@ -14,23 +14,28 @@ document.addEventListener("touchmove", (e) => {
     150
   ) / 150;
 
-  // 表カード（指についてくる）
+  // 表カード（指についてくる + 少し小さく）
+  const frontScale = 1 - progress * 0.05;
+
   if (Math.abs(dragX) > Math.abs(dragY)) {
     const rotate = dragX * 0.05;
     front.style.transform =
-      `translate(${dragX * 0.6}px, 0) rotate(${rotate}deg)`;
+      `translate(${dragX * 0.6}px, 0) rotate(${rotate}deg) scale(${frontScale})`;
   } else {
     front.style.transform =
-      `translate(0, ${dragY * 0.4}px)`;
+      `translate(0, ${dragY * 0.4}px) scale(${frontScale})`;
   }
 
-  // 裏カード（だんだん浮き上がる）
+  // 裏カード（だんだん浮き上がる + 影強調・上下ずらし）
   const scale = 0.95 + progress * 0.05;
   const opacity = 0.5 + progress * 0.5;
+  const liftY = 10 - progress * 10; // 少しずつ上にくる
+  const shadow = 10 + progress * 20;
 
   back.style.transform =
-    `translate(-50%, -50%) scale(${scale})`;
+    `translate(-50%, calc(-50% + ${liftY}px)) scale(${scale})`;
   back.style.opacity = opacity;
+  back.style.boxShadow = `0 ${shadow}px ${shadow * 2}px rgba(0,0,0,0.25)`;
 });
 
 document.addEventListener("touchend", (e) => {
@@ -51,6 +56,7 @@ document.addEventListener("touchend", (e) => {
     const back = document.querySelector(".back-card");
     back.style.transform = "translate(-50%, -50%) scale(0.95)";
     back.style.opacity = "0.5";
+    back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
     return;
   }
 
@@ -68,12 +74,14 @@ document.addEventListener("touchend", (e) => {
       const back = document.querySelector(".back-card");
       back.style.transform = "translate(-50%, -50%) scale(0.95)";
       back.style.opacity = "0.5";
+      back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
     } else {
       animateCard(120, 0, () => prevCard(moveCount));
       const back = document.querySelector(".back-card");
       back.style.transform = "translate(-50%, -50%) scale(0.95)";
       back.style.opacity = "0.5";
+      back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
     }
   } else if (Math.abs(dy) > 50) {
@@ -82,6 +90,7 @@ document.addEventListener("touchend", (e) => {
       const back = document.querySelector(".back-card");
       back.style.transform = "translate(-50%, -50%) scale(0.95)";
       back.style.opacity = "0.5";
+      back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
     } else {
       animateCard(0, 120, () => prevCategory());
@@ -96,4 +105,5 @@ document.addEventListener("touchend", (e) => {
   const back = document.querySelector(".back-card");
   back.style.transform = "translate(-50%, -50%) scale(0.95)";
   back.style.opacity = "0.5";
+  back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
 });
