@@ -1,4 +1,9 @@
+
 const MIN_DISTANCE = 30;
+
+let isDragging = false;
+let dragX = 0;
+let dragY = 0;
 
 const categories = {
   animals: [
@@ -17,6 +22,18 @@ let categoryKeys = Object.keys(categories);
 let currentCategoryIndex = 0;
 let currentIndex = 0;
 
+function animateCard(x, y, callback) {
+  const cardEl = document.getElementById("card");
+  cardEl.style.transform = `translate(${x}px, ${y}px)`;
+  cardEl.style.opacity = "0";
+
+  setTimeout(() => {
+    callback();
+    cardEl.style.transform = "translate(0, 0)";
+    cardEl.style.opacity = "1";
+  }, 250);
+}
+
 // カード表示
 function updateCard() {
   const category = categoryKeys[currentCategoryIndex];
@@ -34,12 +51,36 @@ let startY = 0;
 let startTime = 0;
 
 document.addEventListener("touchstart", (e) => {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
+  const touch = e.touches[0];
+  startX = touch.clientX;
+  startY = touch.clientY;
   startTime = Date.now();
+
+  isDragging = true;
+  dragX = 0;
+  dragY = 0;
+
+  const cardEl = document.getElementById("card");
+  cardEl.style.transition = "none";
+});
+
+document.addEventListener("touchmove", (e) => {
+  if (!isDragging) return;
+
+  const touch = e.touches[0];
+  dragX = touch.clientX - startX;
+  dragY = touch.clientY - startY;
+
+  const cardEl = document.getElementById("card");
+  cardEl.style.transform = `translate(${dragX * 0.4}px, ${dragY * 0.4}px)`;
 });
 
 document.addEventListener("touchend", (e) => {
+  isDragging = false;
+
+  const cardEl = document.getElementById("card");
+  cardEl.style.transition = "transform 0.25s ease, opacity 0.25s ease";
+
   const endX = e.changedTouches[0].clientX;
   const endY = e.changedTouches[0].clientY;
 
@@ -47,12 +88,11 @@ document.addEventListener("touchend", (e) => {
   const dy = endY - startY;
   const time = Date.now() - startTime;
 
-  // 動きが小さすぎたら無視
   if (Math.abs(dx) < MIN_DISTANCE && Math.abs(dy) < MIN_DISTANCE) {
+    cardEl.style.transform = "translate(0, 0)";
     return;
   }
 
-  // スワイプの勢い
   const speed = Math.max(Math.abs(dx), Math.abs(dy)) / time;
   let moveCount = 1;
   if (speed > 1) {
@@ -61,22 +101,25 @@ document.addEventListener("touchend", (e) => {
     moveCount = 2;
   }
 
-  // 左右スワイプ（カード）
   if (Math.abs(dx) > Math.abs(dy)) {
     if (dx < 0) {
-      nextCard(moveCount);
+      animateCard(-120, 0, () => nextCard(moveCount));
+      return;
     } else {
-      prevCard(moveCount);
+      animateCard(120, 0, () => prevCard(moveCount));
+      return;
     }
-  }
-  // 上下スワイプ（カテゴリ）
-  else if (Math.abs(dy) > 50) {
+  } else if (Math.abs(dy) > 50) {
     if (dy < 0) {
-      nextCategory();
+      animateCard(0, -120, () => nextCategory());
+      return;
     } else {
-      prevCategory();
+      animateCard(0, 120, () => prevCategory());
+      return;
     }
   }
+
+  cardEl.style.transform = "translate(0, 0)";
 });
 
 // ▶ カード：次（ループ）
