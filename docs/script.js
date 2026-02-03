@@ -69,7 +69,7 @@ document.addEventListener("touchend", (e) => {
   if (Math.abs(dx) < MIN_DISTANCE && Math.abs(dy) < MIN_DISTANCE) {
     cardEl.style.transform = "translate(0, 0) rotate(0deg)";
     const back = document.querySelector(".back-card");
-    back.style.transform = "translate(-50%, -50%) scale(0.95)";
+    back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
     back.style.opacity = "0.5";
     back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
     return;
@@ -87,14 +87,14 @@ document.addEventListener("touchend", (e) => {
     if (dx < 0) {
       animateCard(-120, 0, () => nextCard(moveCount));
       const back = document.querySelector(".back-card");
-      back.style.transform = "translate(-50%, -50%) scale(0.95)";
+      back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
       back.style.opacity = "0.5";
       back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
     } else {
       animateCard(120, 0, () => prevCard(moveCount));
       const back = document.querySelector(".back-card");
-      back.style.transform = "translate(-50%, -50%) scale(0.95)";
+      back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
       back.style.opacity = "0.5";
       back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
@@ -103,14 +103,14 @@ document.addEventListener("touchend", (e) => {
     if (dy < 0) {
       animateCard(0, -120, () => nextCategory());
       const back = document.querySelector(".back-card");
-      back.style.transform = "translate(-50%, -50%) scale(0.95)";
+      back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
       back.style.opacity = "0.5";
       back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
       return;
     } else {
       animateCard(0, 120, () => prevCategory());
       const back = document.querySelector(".back-card");
-      back.style.transform = "translate(-50%, -50%) scale(0.95)";
+      back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
       back.style.opacity = "0.5";
       return;
     }
@@ -118,7 +118,7 @@ document.addEventListener("touchend", (e) => {
 
   cardEl.style.transform = "translate(0, 0) rotate(0deg)";
   const back = document.querySelector(".back-card");
-  back.style.transform = "translate(-50%, -50%) scale(0.95)";
+  back.style.transform = "translate(calc(-50% + 8px), -50%) scale(0.95)";
   back.style.opacity = "0.5";
   back.style.boxShadow = "0 10px 20px rgba(0,0,0,0.15)";
 });
