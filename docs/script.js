@@ -1,9 +1,9 @@
 // --- 1. データの設定（テスト用） ---
 const cardData = [
-  { name: "いぬ", img: "dog.png" },
-  { name: "ねこ", img: "cat.png" },
-  { name: "ぞう", img: "elephant.png" },
-  { name: "ぱんだ", img: "panda.png" }
+  { name: "いぬ", img: "images/animals/inu.jpg" },
+  { name: "ねこ", img: "images/animals/neko.jpg" },
+  { name: "ぺんぎん", img: "images/animals/pengin.jpg" },
+  { name: "うさぎ", img: "images/animals/usagi.jpg" }
 ];
 
 let currentIndex = 0;
