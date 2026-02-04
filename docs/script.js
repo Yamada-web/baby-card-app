@@ -19,6 +19,7 @@ const categories = [
     cards: [
       { name: "りんご", img: "images/foods/ringo.jpg" },
       { name: "バナナ", img: "images/foods/banana.jpg" },
+      { name: "いちご", img: "images/foods/itigo.jpg" },
       { name: "パン", img: "images/foods/pan.jpg" },
       { name: "おにぎり", img: "images/foods/onigiri.jpg" }
     ]
