@@ -8,30 +8,47 @@ html, body {
   width: 100vw;
   height: 100vh;
   background: #f6f6f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative; /* 子要素の基準 */
+  overflow: hidden;
+  touch-action: none; /* ブラウザ標準のスクロールを無効化 */
 }
 
-#card {
-  width: 90vw;
-  height: 70vh;
+.card-base {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 中央配置 */
+  width: 85vw;
+  height: 65vh;
   background: white;
   border-radius: 24px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  will-change: transform, opacity;
 }
 
-#cardImage {
+/* 背面カードの初期状態 */
+.back-card {
+  z-index: 1;
+  opacity: 0.5;
+  transform: translate(calc(-50% + 8px), -50%) scale(0.95);
+}
+
+#card {
+  z-index: 2;
+}
+
+.card-image {
   max-width: 80%;
   max-height: 70%;
   object-fit: contain;
 }
 
-#name {
+.card-name {
   margin-top: 12px;
   font-size: 28px;
+  font-weight: bold;
 }
